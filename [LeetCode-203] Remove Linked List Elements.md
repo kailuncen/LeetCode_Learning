@@ -69,3 +69,7 @@ class Solution:
         return temp.next
 ```
 
+## Tag
+
+* 单向链表
+* 哑节点
