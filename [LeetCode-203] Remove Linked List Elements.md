@@ -1,7 +1,7 @@
 ## 题目要求
-> Remove all elements from a linked list of integers that have value **_val_** .
+> Remove all elements from a linked list of integers that have value _**val**_ .
 
-> 删除链表中等于给定值 **_val _** 的所有节点。
+> 删除链表中等于给定值 _**val**_ 的所有节点。
 
 ## 示例
 > **Input:**  1->2->6->3->4->5->6, _**val**_ = 6
