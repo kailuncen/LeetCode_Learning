@@ -1,0 +1,89 @@
+## 题目要求
+> Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+
+> 判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
+链接：https://leetcode-cn.com/problems/palindrome-number
+
+## 示例
+> Input: 121 Output: true
+
+> Input: -121 Output: false
+> Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+> Input: 10 Output: false
+> Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+
+## 题解思路
+1.比较直观想到的就是转换成字符串做反转操作。
+2.题设建议是不要用转换字符串的方式去做，那么我想到的思路是先考虑一些边界情况，比如说:
+
+* 这个数是负数的情况
+去掉一些边界情况，将期望将整个数进行反转，如果反转后的数字和原始数字相同，那么这个数字就是回文。例如，输入 1221，我们可以将数字 1221，整个反转为1221，并对两个数字进行比较，如果相同的话，就是回文。
+
+这个逆转的操作，对于数字1221，可以首先执行1221%10的操作得到1，然后要得到倒数第二个数字，可以将1221除以10，再求余数得到，同时将最后一位数字乘以10再加上倒数第二位的数字，那么就是1*10+2 = 12,就得到了想要的结果，以此类推，就得到了逆转后的数字了。
+
+
+**首先是前面第一和第二种的解法**
+
+**java版本**
+```java
+// 直接字符串反转求解
+class Solution {
+    public boolean isPalindrome(int x) {
+        String result = new StringBuilder(x + "").reverse().toString();
+        return result.equals(String.valueOf(x));
+
+    }
+}
+```
+![file](https://user-gold-cdn.xitu.io/2019/12/24/16f383c7dc9c4803?w=800&h=472&f=jpeg&s=26115)
+
+```java
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x < 0 ) {
+            return false;
+        }
+        int originX = x;
+        int reverseNum = 0;
+        while(x != 0) {
+            reverseNum = reverseNum * 10 + x %10;
+            x = x/ 10;
+        }
+
+        return originX == reverseNum;
+    }
+}
+```
+![file](https://user-gold-cdn.xitu.io/2019/12/24/16f383c7dea56ea6?w=800&h=478&f=jpeg&s=26152)
+
+
+
+**官方还给了一种题解**
+官方给的题解是只需要求一半的数字即可，比如说1221，那么求到下半部分12，发现和上半部分12相等，即可退出，比如说12321，那么求到下半部分123，发现比12打，那么就退出，如果是非回文，那么只要下半部数比上半部数打时即可退出循环。
+
+不过我感觉官方给的题解，不是很好理解，但是他这边考虑了可能完全逆转会有溢出的问题，从时间效率上来说和第二种差别不大。
+
+
+```java
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x < 0 ) {
+            return false;
+        }
+
+        if (x % 10 ==0 && x!=0) {
+            return false;
+        }
+
+        int reverseNum = 0;
+        while(x > reverseNum) {
+            reverseNum = reverseNum * 10 + x %10;
+            x = x/ 10;
+        }
+
+        return x == reverseNum || x == reverseNum/10;
+    }
+}
+```
+![file](https://user-gold-cdn.xitu.io/2019/12/24/16f383c7de71c347?w=800&h=473&f=jpeg&s=25793)
